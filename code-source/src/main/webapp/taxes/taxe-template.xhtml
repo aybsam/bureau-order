@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:hz="http://lismart.com/jsf/smartregie"
+>
+
+    <h:form>
+
+        <p:panel header="Informations Générales">
+
+            <div class="ui-g ui-fluid">
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel for="intitule" value="#{taxeMsg['intitule']} *"/>
+                </div>
+                <div class="ui-sm-12 ui-md-10">
+                    <p:inputText id="intitule"
+                                 value="#{taxe.intitule}" disabled="#{isDisabled}"/>
+                    <p:message display="text" id="msgIntitule" for="intitule"/>
+                </div>
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel for="abreviation" value="#{taxeMsg['abreviation']}"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <p:inputText id="abreviation"
+                                 value="#{taxe.abreviation}"/>
+                    <p:message display="text" id="msgAbreviation" for="abreviation"/>
+                </div>
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel for="base" value="#{taxeMsg['baseImposale']} *"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <p:selectOneRadio id="base" value="#{taxe.base}" layout="grid" columns="2" disabled="#{isDisabled}">
+                        <f:selectItems value="#{enumsData.basesTaxe}" var="base"
+                                       itemLabel="#{base.description}" itemValue="#{base}"/>
+                    </p:selectOneRadio>
+                    <p:message for="base" id="msgBaseTaxe" display="text"/>
+                </div>
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel for="unite" value="#{taxeMsg['unite']}"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <p:inputText id="unite"
+                                 value="#{taxe.unite}"/>
+                    <p:message display="text" id="msgUnite" for="unite"/>
+                </div>
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel for="delaiTolerance" value="#{taxeMsg['delaiTolerance']} *"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <p:spinner id="delaiTolerance"
+                               value="#{taxe.delaiTolerance}" min="0"/>
+                    <i>* en nombre de mois</i>
+                    <p:message display="text" id="msgDelaiTolerance" for="delaiTolerance"/>
+                </div>
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel for="type" value="#{taxeMsg['reglement']} *"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <p:selectOneMenu id="type" value="#{taxe.reglement.type}" disabled="#{isDisabled}">
+                        <f:selectItem itemLabel="Choisissez un règlement" itemValue=""/>
+                        <f:selectItems value="#{enumsData.typesReglement}"
+                                       var="type" itemLabel="#{type.description}"
+                                       itemValue="#{type}"/>
+                    </p:selectOneMenu>
+                    <ui:remove>
+                        <p:selectBooleanCheckbox id="parTranche"
+                                                 value="#{taxe.reglement.parTranche}"
+                                                 itemLabel="Peut être réglé suivant des tranches"
+                                                 style="margin-top: 10px"/>
+                    </ui:remove>
+                    <p:message display="text" id="msgTypeReglement" for="type"/>
+                </div>
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel for="specificationsTaxe" value="#{taxeMsg['specificationsTaxe']}"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <p:selectManyCheckbox id="specificationsTaxe" value="#{taxe.specificationsTaxe}"
+                                          disabled="#{isDisabled}"
+                                          layout="grid" columns="1" collectionType="java.util.LinkedHashSet">
+                        <f:selectItems value="#{enumsData.specificationsTaxe}"
+                                       var="specificationTaxe" itemLabel="#{specificationTaxe.description}"
+                                       itemValue="#{specificationTaxe}"/>
+                    </p:selectManyCheckbox>
+                    <p:message display="text" id="msgSpecificationsTaxe" for="specificationsTaxe"/>
+                </div>
+
+            </div>
+
+        </p:panel>
+
+        <p:spacer/>
+
+        <p:panel header="#{taxeMsg['repartition']}">
+
+            <div class="ui-g ui-fluid">
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel value="#{taxeMsg['repartition.partCommune']}"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <hz:percentageSlider id="partCommune" value="#{taxe.repartition.partCommune}"/>
+                </div>
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel value="#{taxeMsg['repartition.partTresorerie']}"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <hz:percentageSlider id="partTresorerie" value="#{taxe.repartition.partTresorerie}"/>
+                </div>
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel value="#{taxeMsg['repartition.partPrefectureProvince']}"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <hz:percentageSlider id="partPrefectureProvince" value="#{taxe.repartition.partPrefectureProvince}"/>
+                </div>
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel value="#{taxeMsg['repartition.partBienfaisance']}"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <hz:percentageSlider id="partBienfaisance" value="#{taxe.repartition.partBienfaisance}"/>
+                </div>
+
+                <div class="ui-sm-12 ui-md-2">
+                    <p:outputLabel value="#{taxeMsg['repartition.partRegion']}"/>
+                </div>
+                <div class="ui-sm-12 ui-md-4">
+                    <hz:percentageSlider id="partRegion" value="#{taxe.repartition.partRegion}"/>
+                </div>
+
+            </div>
+
+        </p:panel>
+
+        <p:spacer/>
+
+        <div class="ui-g ui-fluid">
+
+            <div class="ui-sm-12 ui-md-12">
+                <p:commandButton value="#{msg['button.save']}" action="#{actionBean[action]}"
+                                 update="@form" ajax="false" styleClass="btn-primary"/>
+            </div>
+
+        </div>
+
+    </h:form>
+
+</ui:composition>

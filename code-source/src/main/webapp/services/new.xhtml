@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+
+    <ui:define name="title">
+        Utilisateurs
+    </ui:define>
+
+    <ui:define name="body">
+
+        <p:panel header="Ajouter un service">
+
+            <h:form>
+
+                <div class="ui-g ui-fluid">
+
+                    <div class="ui-sm-12 ui-md-2 ui-lg-2">
+                        <p:outputLabel for="lastName" value="Code *"/>
+                    </div>
+                    <div class="ui-sm-12 ui-md-4 ui-lg-4">
+                        <p:inputText id="lastName"
+                                     value="#{newServiceController.service.code}"/>
+                        <p:message display="text" id="msgLastName" for="lastName"/>
+                    </div>
+
+                    <div class="ui-sm-12 ui-md-2 ui-lg-2">
+                        <p:outputLabel for="firstName" value="Nom *"/>
+                    </div>
+                    <div class="ui-sm-12 ui-md-4 ui-lg-4">
+                        <p:inputText id="firstName"
+                                     value="#{newServiceController.service.nom}"/>
+                        <p:message display="text" id="msgFirstName" for="firstName"/>
+                    </div>
+
+                    <div class="ui-sm-12 ui-md-2 ui-lg-2">
+                        <p:outputLabel for="cin" value="Description *"/>
+                    </div>
+                    <div class="ui-sm-12 ui-md-4 ui-lg-4">
+                        <p:inputText id="cin"
+                                     value="#{newServiceController.service.description}"/>
+                        <p:message display="text" id="msgCin" for="cin"/>
+
+                    </div>
+
+                    <div class="ui-sm-12 ui-md-2 ui-lg-2">
+                        <p:outputLabel for="birthday" value="Date de création"/>
+                    </div>
+                    <div class="ui-sm-12 ui-md-4 ui-lg-4">
+                        <p:calendar id="birthday" navigator="true" pattern="dd-MM-yyyy"
+                                    yearRange="c-80:c" value="#{newServiceController.service.dateCreation}"/>
+                        <p:message display="text" id="msgBirthday" for="birthday"/>
+
+                    </div>
+
+                    <div class="ui-sm-12 ui-md-2 ui-lg-2"/>
+                    <div class="ui-sm-12 ui-md-10 ui-lg-10">
+                        <p:commandButton styleClass="btn-primary" value="Enregistrer" update="@form"
+                                         action="#{newServiceController.submit()}"/>
+                    </div>
+
+                </div>
+
+            </h:form>
+
+        </p:panel>
+
+    </ui:define>
+</ui:composition>

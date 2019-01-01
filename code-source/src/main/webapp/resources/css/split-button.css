@@ -1,0 +1,10 @@
+.ui-menuitem-text{
+    float: none !important;
+    white-space: nowrap;
+    display: list-item;
+    margin-right: 2em;
+}
+
+.ui-menu{
+    width: auto;
+}

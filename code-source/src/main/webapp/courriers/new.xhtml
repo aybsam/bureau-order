@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="title">
+        Utilisateurs
+    </ui:define>
+
+	<ui:define name="body">
+
+		<p:panel header="Ajouter un courrier">
+
+			<h:form>
+
+				<div class="ui-g ui-fluid">
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="emetteur" value="l'émetteur *" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:selectOneMenu id="emetteur" value="#{courrierController.source}" >
+							<f:selectItem itemLabel="Selectionner l'emetteur" itemValue=""/>
+							<f:selectItems value="#{courrierController.users}"/>
+						</p:selectOneMenu>
+							
+						<p:message display="text" id="msgEmetteur" for="emetteur" />
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="Destinataire" value="Destinataire *" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:selectOneMenu id="Destinataire" value="#{courrierController.destination}" >
+							<f:selectItem itemLabel="Selectionner le destinataire" itemValue=""/>
+							<f:selectItems value="#{courrierController.users}"/>
+						</p:selectOneMenu>
+						<p:message display="text" id="msgDestinataire" for="Destinataire" />
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="date_envoie" value="Date d'envoie" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:calendar id="date_envoie" navigator="true" pattern="dd-MM-yyyy" yearRange="c-80:c"
+								 value="#{courrierController.courrier.dateEnvoie}" />
+						<p:message display="text" id="msgDate_envoie" for="date_envoie" />
+
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:outputLabel  value="" />
+					</div>
+					
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel  value="" />
+					</div>
+					
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="Description" value="Description *" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:inputTextarea id="Description"
+							value="#{courrierController.courrier.description}" />
+						<p:message display="text" id="msgDescription" for="Description" />
+
+					</div>
+
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2" />
+					<div class="ui-sm-12 ui-md-10 ui-lg-10">
+						<p:commandButton styleClass="btn-primary" value="Enregistrer"
+							update="@form" action="#{courrierController.valider()}" process="@form"/>
+					</div>
+
+				</div>
+
+			</h:form>
+
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

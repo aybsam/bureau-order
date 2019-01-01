@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+
+    <application>
+        <resource-handler>org.omnifaces.resourcehandler.CombinedResourceHandler</resource-handler>
+        <message-bundle>
+            com.lismart.smartregie.i18n.jsf-validation
+        </message-bundle>
+        <locale-config>
+            <default-locale>fr</default-locale>
+            <supported-locale>ar</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>com.lismart.smartregie.i18n.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>com.lismart.smartregie.i18n.taxe-messages</base-name>
+            <var>taxeMsg</var>
+        </resource-bundle>
+    </application>
+
+</faces-config>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/admin.xhtml">
+
+    <ui:define name="head">
+        <title>Smart Régie</title>
+        <meta name="theme-color" content="#444"/>
+        <meta name="mobile-web-app-capable" content="yes"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon.ico']}"/>
+        <f:loadBundle var="msgTemplate" basename="com.lismart.smartregie.i18n.template"/>
+        <h:outputStylesheet library="css" name="starter.css"/>
+        <h:outputStylesheet library="css" name="message-error.css"/>
+        <h:outputStylesheet library="css" name="split-button.css"/>
+    </ui:define>
+
+    <ui:define name="logo">
+        Smart Régie
+    </ui:define>
+
+    <ui:define name="logo-mini">
+        SR
+    </ui:define>
+
+    <ui:define name="menu">
+        <ui:include src="/includes/menu.xhtml"/>
+    </ui:define>
+
+    <ui:define name="top-menu">
+        <ui:include src="/includes/top-bar.xhtml"/>
+    </ui:define>
+
+    <ui:define name="content-begin">
+        <div class="row">
+            <div class="col-sm-12">
+                <p:messages id="_messages" closable="true" globalOnly="true" autoUpdate="true"
+                            showDetail="true" severity="error,fatal" escape="false"/>
+                <!-- we need two messages because info-messages are hidden by javascript  -->
+                <p:messages id="_info-messages" closable="true" autoUpdate="true" showDetail="false"
+                            severity="info,warn" escape="false"/>
+                <p:tooltip/> <!-- exception messages with type tooltip -->
+            </div>
+        </div>
+    </ui:define>
+
+    <ui:define name="controlsidebar-content">
+        <ui:include src="/includes/controlsidebar-tabs-content.xhtml"/>
+    </ui:define>
+
+    <ui:define name="footer">
+        <ui:include src="/includes/footer.xhtml"/>
+    </ui:define>
+
+</ui:composition>

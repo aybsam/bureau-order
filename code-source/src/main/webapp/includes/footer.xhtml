@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    #{msgTemplate['copyright']} <p:spacer width="10"/> - <p:spacer width="10"/>
+    <p:graphicImage url="/resources/images/logo-footer.png" width="100" title="L.I Smart"/>
+
+    <div class="pull-right hidden-xs" style="color: gray">
+        <ui:remove>
+            <h:form>
+                <h:commandLink action="#{languageSwitcher.changeLanguage('fr')}" value="Français"/>
+                <p:spacer width="10"/>
+                <h:commandLink action="#{languageSwitcher.changeLanguage('ar')}" value="العربية"/>
+            </h:form>
+        </ui:remove>
+    </div>
+
+    <script type="text/javascript">
+        if (isMobile()) {
+            $('a.ui-link').click(function () {
+                $(this).prop('disabled', true);
+                showBar();
+            });
+        }
+    </script>
+</ui:composition>

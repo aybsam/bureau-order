@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="#{layoutMB.template}">
+
+    <ui:define name="title">
+        Ajouter une taxe
+    </ui:define>
+
+    <ui:define name="description">
+    </ui:define>
+
+    <ui:define name="body">
+
+        <ui:decorate template="taxe-template.xhtml">
+            <ui:param name="isDisabled" value="false"/>
+            <ui:param name="taxe" value="#{newTaxeController.taxe}"/>
+            <ui:param name="actionBean" value="#{newTaxeController}"/>
+            <ui:param name="action" value="submit"/>
+        </ui:decorate>
+
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+
+    <ui:define name="title">
+        #{viewTaxeController.taxe.intitule}
+    </ui:define>
+
+    <ui:define name="description">
+        #{viewTaxeController.taxe.abreviation}
+    </ui:define>
+
+    <ui:define name="body">
+
+        <adm:breadcrumb link="/taxes/view?id=#{viewTaxeController.taxe.id}.xhtml" title="#{viewTaxeController.taxe.intitule}"/>
+
+        <h:form>
+
+            <p:panel header="Informations Générale">
+
+                <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+                             layout="grid">
+
+                    <p:outputLabel value="Intitulé"/>
+                    <h:outputText value="#{viewTaxeController.taxe.intitule}"/>
+
+                    <p:outputLabel>Base Imposale</p:outputLabel>
+                    <h:outputText value="#{viewTaxeController.taxe.base.description}"/>
+
+                    <p:outputLabel value="Abréviation"/>
+                    <h:outputText value="#{viewTaxeController.taxe.abreviation}"/>
+
+                    <p:outputLabel>Specifications</p:outputLabel>
+                    <ui:repeat value="#{viewTaxeController.taxe.specificationsTaxe}" var="specificationTaxe">
+                        <h:outputText value="- #{specificationTaxe.description}"/>
+                        <br/>
+                    </ui:repeat>
+
+                </p:panelGrid>
+
+                <p:spacer/>
+
+            </p:panel>
+
+            <p:spacer/>
+
+            <p:panel header="Tarifs de la taxe">
+                <p:toolbar style="border:none">
+                    <f:facet name="left">
+                        <p:button value="Ajouter un tarif" icon="fa fa-plus" styleClass="btn-default"
+                                  outcome="/tarifs/new.xhtml">
+                            <f:param name="taxe_id" value="#{viewTaxeController.taxe.id}"/>
+                        </p:button>
+
+                        <span style="padding: 5px;color: darkgray">
+                            <i class="fa fa-ellipsis-v"/>
+                        </span>
+
+                        <p:commandButton id="deletebtn" title="Supprimer" icon="fa fa-trash" styleClass="btn-danger"
+                                         action="#{viewTaxeController.delete}" disabled="#{empty viewTaxeController.selectedTarifs or viewTaxeController.selectedTarifs.size() == 0}"
+                                         update="datatable">
+                            <p:confirm header="Confirmation" message="Êtes-vous sûr?" icon="ui-icon-alert"/>
+                        </p:commandButton>
+
+                        <ui:include src="../WEB-INF/templates/confirm-dialog.xhtml"/>
+
+                    </f:facet>
+                </p:toolbar>
+
+                <p:spacer/>
+
+                <p:dataTable id="datatable" var="tarif" value="#{viewTaxeController.taxe.tarifs}"
+                             widgetVar="taxesTable" rowKey="#{tarif.id}"
+                             emptyMessage="No tarifs found" stickyHeader="false"
+                             selection="#{viewTaxeController.selectedTarifs}" reflow="true">
+
+                    <p:ajax event="rowSelectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
+                    <p:ajax event="rowUnselectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
+
+                    <p:column width="5%" selectionMode="multiple" styleClass="align-center"/>
+
+                    <p:column headerText="Désignation">
+                        <h:outputText value="#{tarif.designation}"/>
+                    </p:column>
+
+                    <p:column headerText="Tarif Général">
+                        <h:outputText value="#{tarif.valeurTarif}"/>
+                    </p:column>
+
+                    <p:column headerText="Tarif Appliquée">
+                        <h:outputText value="#{tarif.valeurTarif.appliquee}"/>
+                    </p:column>
+
+                    <p:column headerText="Remarque">
+                        <h:outputText value="#{tarif.remarque}"/>
+                    </p:column>
+
+                    <p:column width="5%">
+                        <p:button outcome="/tarifs/edit.xhtml" icon="fa fa-edit" title="Modifier">
+                            <f:param name="taxe_id" value="#{viewTaxeController.taxe.id}"/>
+                            <f:param name="tarif_id" value="#{tarif.id}"/>
+                        </p:button>
+                    </p:column>
+
+                </p:dataTable>
+
+            </p:panel>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

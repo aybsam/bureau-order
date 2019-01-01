@@ -1,0 +1,11 @@
+div.ui-message-error {
+    background-color: transparent;
+    color: #dd4b39;
+    min-height: 25px;
+    padding: 0 !important;
+}
+
+.ui-message-error {
+    border: none !important;
+    margin: 0 !important;
+}

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="title">
+        Courriers
+    </ui:define>
+
+	<ui:define name="body">
+		<h:form prependId="false">
+
+			<p:panel>
+				<p:toolbar style="border:none">
+					<f:facet name="left">
+						<p:button value="Ajouter un Courrier" icon="fa fa-plus"
+							styleClass="btn-default" outcome="/courriers/new.xhtml" />
+
+						<span style="padding: 5px; color: darkgray"> <i
+							class="fa fa-ellipsis-v" />
+						</span>
+
+						<p:commandButton id="deleteBtn" title="Delete" icon="fa fa-trash" styleClass="btn-danger"
+										 action="#{courrierController.delete}" disabled="#{empty courrierController.selectedCourriers or courrierController.selectedCourriers.size() == 0}"
+										 process="@this" update="datatable">
+							<p:confirm header="Confirmation" message="Êtes-vous sûr?" icon="ui-icon-alert"/>
+						</p:commandButton>
+
+						<ui:include src="../WEB-INF/templates/confirm-dialog.xhtml" />
+
+					</f:facet>
+
+				</p:toolbar>
+
+				<br />
+
+				<p:dataTable id="datatable" var="courrier"
+					value="#{courrierController.courriers}" widgetVar="courriersTable"
+					paginator="true" styleClass="header-right"
+					paginatorTemplate="{PreviousPageLink} {PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15" rows="15" paginatorPosition="bottom"
+					rowKey="#{courrier.id}"
+					emptyMessage="No courriers found with given criteria"
+					stickyHeader="false"
+					selection="#{courrierController.selectedCourriers}"
+					tableStyle="width: auto">
+
+					<p:ajax event="rowSelectCheckbox"
+						update="@(.ui-button, .ui-confirm-dialog)" />
+					<p:ajax event="rowUnselectCheckbox"
+						update="@(.ui-button, .ui-confirm-dialog)" />
+
+					<p:column width="5%" selectionMode="multiple"
+						styleClass="align-center">
+					</p:column>
+
+					<p:column headerText="Description courrier">
+						<h:outputText value="#{courrier.description}" />
+					</p:column>
+
+					<p:column headerText="Date d'envoie">
+						<h:outputText value="#{courrier.dateEnvoie}">
+							<f:convertDateTime pattern="yyyy-MM-dd" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Source">
+						<h:outputText
+							value="#{courrierController.getSourcebyCode(courrier.source.id)}" />
+					</p:column>
+
+					<p:column headerText="Destinataire">
+						<h:outputText
+							value="#{courrierController.getSourcebyCode(courrier.destination.id)}" />
+					</p:column>
+
+
+
+					<p:column width="5%">
+						<p:commandButton icon="fa fa-edit" title="Modifier"
+							styleClass="btn-block"
+							actionListener="#{courrierController.send(courrier)}"
+							oncomplete="PF('editDlg').show();" update="@(div[id$=editGrid])" />
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+
+		</h:form>
+		
+		<p:dialog header="Modification Courrier" widgetVar="editDlg" resizable="false" draggable="false"
+                  appendTo="@(body)" responsive="true" width="400"
+                  modal="true" styleClass="dialog-login">
+
+            <h:form>
+
+                <p:panelGrid id="editGrid" columns="2" cellpadding="5" layout="grid"
+                             styleClass="no-border ui-fluid">
+
+                    <p:outputLabel for="Description" value="Description:"/>
+                    <p:inputText id="Description" value="#{editCourrierController.courrier.description}"/>
+
+                    <p:outputLabel for="dateenvoi" value="Date d'envoie:"/>
+                    <p:calendar id="dateenvoi" value="#{editCourrierController.courrier.dateEnvoie}" showOn="button"
+                                pattern="yyyy-MM-dd"/>
+
+                </p:panelGrid>
+
+                <p:separator/>
+
+                <p:button styleClass="btn-material pull-left" value="Annuler"
+                          onclick="PF('editDlg').hide();return false"/>
+
+                <p:commandButton styleClass="btn-primary btn-material pull-right" value="Enregistrer"
+                                 update="@(div[id$=editGrid]), datatable"
+                                 action="#{editCourrierController.submit()}" process="@form"
+                                 ignoreAutoUpdate="true"/>
+
+            </h:form>
+        </p:dialog>
+
+
+
+
+	</ui:define>
+
+</ui:composition>

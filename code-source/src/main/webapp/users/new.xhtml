@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:adm="http://github.com/adminfaces"
+	template="#{layoutMB.template}">
+
+	<ui:define name="title">
+        Utilisateurs
+    </ui:define>
+
+	<ui:define name="body">
+
+		<p:panel header="Ajouter un utilisateur">
+
+			<h:form>
+
+				<div class="ui-g ui-fluid">
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="lastName" value="Nom *" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:inputText id="lastName"
+							value="#{newUserController.user.lastName}" />
+						<p:message display="text" id="msgLastName" for="lastName" />
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="firstName" value="Prénom *" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:inputText id="firstName"
+							value="#{newUserController.user.firstName}" />
+						<p:message display="text" id="msgFirstName" for="firstName" />
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="cin" value="CIN" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:inputText id="cin" value="#{newUserController.user.cin}" />
+						<p:message display="text" id="msgCin" for="cin" />
+
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="email" value="E-Mail *" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:inputText id="email" value="#{newUserController.user.email}" />
+						<p:message display="text" id="msgEmail" for="email" />
+
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="password" value="Mot de passe *" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:password id="password"
+							value="#{newUserController.user.password}"
+							match="passwordConfirmation" />
+						<p:message display="text" id="msgPassword" for="password" />
+
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="birthday" value="Date Naissance" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:calendar id="birthday" navigator="true" pattern="dd-MM-yyyy"
+							yearRange="c-80:c" value="#{newUserController.user.birthday}" />
+						<p:message display="text" id="msgBirthday" for="birthday" />
+
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="passwordConfirmation" value="Confirmation *" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:password id="passwordConfirmation"
+							value="#{newUserController.user.password}" />
+						<p:message display="text" id="msgPasswordConfirmation"
+							for="passwordConfirmation" />
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="role" value="Role *" />
+					</div>
+					<div class="ui-sm-12 ui-md-4 ui-lg-4">
+						<p:selectOneRadio id="role" value="#{newUserController.role}">
+							<f:selectItem itemLabel="Utilisateur" itemValue="ROLE_USER" />
+							<f:selectItem itemLabel="Administrateur" itemValue="ROLE_ADMIN" />
+						</p:selectOneRadio>
+						<p:message display="text" for="role" />
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2">
+						<p:outputLabel for="service" value="Service *" />
+					</div>
+					<div>
+						<p:selectOneMenu id="service"
+							value="#{newUserController.code}" filter="true"
+							filterMatchMode="startsWith">
+							<f:selectItem itemLabel="Selectionner Service" />
+							<f:selectItems value="#{newUserController.allservices}"
+								var="service" itemValue="#{service.code}"
+								itemLabel="#{service.nom}" />
+						</p:selectOneMenu>
+						<p:message display="text" for="service" />
+
+					</div>
+
+					<div class="ui-sm-12 ui-md-2 ui-lg-2" />
+					<div class="ui-sm-12 ui-md-10 ui-lg-10">
+						<p:commandButton styleClass="btn-primary" value="Enregistrer" process="@form"
+							update="@form" action="#{newUserController.submit()}" />
+					</div>
+
+				</div>
+
+			</h:form>
+
+		</p:panel>
+
+	</ui:define>
+</ui:composition>
