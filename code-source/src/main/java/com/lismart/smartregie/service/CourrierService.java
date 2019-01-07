@@ -10,7 +10,7 @@ public interface CourrierService {
     void save(Courrier courrier) throws EmailExistsException;
     void delete(Courrier courrier);
     List<Courrier> findAll();
-    List<Courrier> findAllByAuthor(Long idUser);
+    //List<Courrier> findAllByAuthor(Long idUser);
 
     
 }

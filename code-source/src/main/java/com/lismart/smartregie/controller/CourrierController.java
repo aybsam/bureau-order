@@ -53,17 +53,8 @@ public class CourrierController implements Serializable {
         users = new ArrayList<User>();
 
         // pour initialiser le combo
-        UserDetails springUser = (UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-        user = userService.findByEmail(Email.of(springUser.getUsername()));
+        courriers = courrierService.findAll();
 
-
-        if(springUser.getAuthorities().equals("ROLE_ADMIN")){
-            courriers = courrierService.findAll();
-
-        }else{
-            courriers = courrierService.findAllByAuthor();
-        }
         users = userService.findAll();
     }
 

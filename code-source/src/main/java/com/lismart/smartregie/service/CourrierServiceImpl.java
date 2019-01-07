@@ -24,10 +24,6 @@ public class CourrierServiceImpl implements CourrierService {
         return courrierRepository.findAll();
     }
 
-    @Override
-    public List<Courrier> findAllByAuthor(Long idUser) {
-       return courrierRepository.findAllByAuthor(idUser);
-    }
 
 
     @Override
